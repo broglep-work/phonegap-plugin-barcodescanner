@@ -580,8 +580,16 @@ parentViewController:(UIViewController*)parentViewController
     try {
         // This will bring in multiple entities if there are multiple 2D codes in frame.
         for (AVMetadataObject *metaData in metadataObjects) {
+            if (![metaData isKindOfClass:AVMetadataMachineReadableCodeObject.class]) {
+                continue;
+            }
+            
             AVMetadataMachineReadableCodeObject* code = (AVMetadataMachineReadableCodeObject*)[self.previewLayer transformedMetadataObjectForMetadataObject:(AVMetadataMachineReadableCodeObject*)metaData];
 
+            if (code.stringValue == nil) {
+                continue;
+            }
+            
             if ([self checkResult:code.stringValue]) {
                 [self barcodeScanSucceeded:code.stringValue format:[self formatStringFromMetadata:code]];
             }
