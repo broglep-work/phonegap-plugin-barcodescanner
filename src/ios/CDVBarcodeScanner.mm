@@ -802,11 +802,12 @@ parentViewController:(UIViewController*)parentViewController
     [super viewDidAppear:animated];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    if (self.isBeingDismissed && self.processor.capturing) {
+- (void)viewDidDisappear:(BOOL)animated {
+    if (self.processor.capturing) {
         [self.processor barcodeScanCancelled];
     }
+    
+    [super viewDidDisappear:animated];
 }
 
 - (AVCaptureVideoOrientation)interfaceOrientationToVideoOrientation:(UIInterfaceOrientation)orientation {
